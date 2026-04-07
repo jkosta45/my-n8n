@@ -1,7 +1,12 @@
-FROM n8nio/n8n:latest
+FROM node:18-bullseye
 
-USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl ffmpeg && rm -rf /var/lib/apt/lists/*
+RUN npm install -g n8n
 
-USER node
+EXPOSE 5678
+
+CMD ["n8n"]
